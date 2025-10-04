@@ -56,13 +56,13 @@ router.get("/users/:idEmpresa", authenticateToken, getAllUsers);
 router.get("/users/:persCodi/:idEmpresa", authenticateToken, getUserProfile);
 
 //POST Registro de usuario
-router.post("/register/:idEmpresa", userRegister);
+router.post("/register/:idEmpresa", userRegister); // No necesita token porque es el primer usuario que se crea en la empresa
 
 //POST Login de usuario
-router.post("/login/:idEmpresa", userLogin);
+router.post("/login/:idEmpresa", userLogin); // No necesita token porque es para obtener el token
 
 //PATCH User Key
-router.patch("/recovery_key/:idEmpresa", userRecoveryKey);
+router.patch("/recovery_key/:idEmpresa", userRecoveryKey); // No necesita token porque es para recuperar la clave
 
 //DELETE User
 router.delete("/users/:userCodi/:idEmpresa", authenticateToken, deleteUser );
@@ -104,7 +104,10 @@ router.patch("/registro_salida/:asigId/:idEmpresa", authenticateToken, registrar
 router.get("/personal/number/:idEmpresa", authenticateToken, getNumberPersonal);
 
 // GET Personal
-router.get("/personal/:nroLegajo/:idEmpresa", authenticateToken, getPersonal);
+router.get("/personal/:nroLegajo/:idEmpresa", getPersonal); // No requiere token porque es usado para el recupero de clave
+
+// GET Personal
+router.get("/personal/:idEmpresa", authenticateToken, getPersonal); 
 
 
 
