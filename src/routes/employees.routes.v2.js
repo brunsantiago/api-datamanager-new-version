@@ -41,7 +41,8 @@ const {
   updateVersionDevice,
   getAllHolidays,
   registrarIngresoCompleto,
-  registrarSalidaCompleta
+  registrarSalidaCompleta,
+  getLastVersionTest
   } = require("../controllers/employees.controller.js");
 
 
@@ -199,6 +200,9 @@ router.get("/puestos-con-estado/:idCliente/:idObjetivo/:idEmpresa", authenticate
 
 //GET Ultima version de la App disponible
 router.get("/app_version/last_version/:idEmpresa", getLastVersion);
+
+//GET Ultima version de la App disponible
+router.get("/test/app_version/last_version/:idEmpresa", getLastVersionTest);
 
 //TABLE FERIADOS
 

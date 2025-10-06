@@ -673,6 +673,19 @@ const getLastVersion = async (req, res) => {
   }
 };
 
+const getLastVersionTest = async (req, res) => {
+  try {
+    const { idEmpresa } = req.params;
+    //let table_name = selectTableVersion(idEmpresa);
+    const [rows] = await pool.query("SELECT * FROM app_version_test WHERE version_code = (SELECT MAX(version_code) FROM app_version_test)");
+    //const [rows] = await pool.query("SELECT * FROM "+table_name+" WHERE version_code = (SELECT MAX(version_code) FROM "+table_name+" )" );
+    res.json(rows);
+  } catch (error) {
+    console.error("getLastVersion error:", error);
+    return res.status(500).json({ message: "Something goes wrong", error: error.message });
+  }
+};
+
 //TABLE feriados
 
 const getAllHolidays = async (req, res) => {
@@ -796,5 +809,6 @@ module.exports = {
   updateVersionDevice,
   getAllHolidays,
   registrarIngresoCompleto,
-  registrarSalidaCompleta
+  registrarSalidaCompleta,
+  getLastVersionTest
   };
