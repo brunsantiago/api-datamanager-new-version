@@ -493,7 +493,8 @@ const updateVersionDevice = async (req, res) => {
     const { androidId, idEmpresa } = req.params;
     const { appVersion } = req.body;
     let table_name = selectTableDevices(idEmpresa);
-    const [result] = await pool.query("UPDATE " + table_name + " SET DEVI_VERS=? WHERE DEVI_ANID = ?",
+     // Actualizar versión y timestamp del último uso con NOW()
+    const [result] = await pool.query("UPDATE " + table_name + " SET DEVI_VERS=?, DEVI_DATE=NOW() WHERE DEVI_ANID = ?",
     [ appVersion, androidId ]
     );
     if (result.affectedRows === 0){
