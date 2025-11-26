@@ -432,10 +432,10 @@ const addDevice = async (req, res) => {
   try {
     const { idEmpresa } = req.params;
     let table_name = selectTableDevices(idEmpresa);
-    const { devi_anid,	devi_date,	devi_esta,	devi_ccli,	devi_cobj,	devi_marc,	devi_mode, devi_ncli,	devi_nobj, devi_nlin, devi_coor, devi_radi, devi_ubic, devi_vers } = req.body;
+    const { devi_anid, devi_date, devi_esta, devi_ccli, devi_cobj, devi_marc, devi_mode, devi_ncli, devi_nobj, devi_nlin, devi_coor, devi_radi, devi_ubic, devi_vers } = req.body;
     const [result] = await pool.query(
-      "INSERT INTO " + table_name + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [ devi_anid,	devi_date,	devi_esta,	devi_ccli,	devi_cobj,	devi_marc,	devi_mode, devi_ncli,	devi_nobj, devi_nlin, devi_coor, devi_radi, devi_ubic, devi_vers ]
+      "INSERT INTO " + table_name + " (DEVI_ANID, DEVI_DATE, DEVI_ESTA, DEVI_CCLI, DEVI_COBJ, DEVI_MARC, DEVI_MODE, DEVI_NCLI, DEVI_NOBJ, DEVI_NLIN, DEVI_COOR, DEVI_RADI, DEVI_UBIC, DEVI_VERS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [ devi_anid, devi_date, devi_esta, devi_ccli, devi_cobj, devi_marc, devi_mode, devi_ncli, devi_nobj, devi_nlin, devi_coor, devi_radi, devi_ubic, devi_vers ]
     );
     res.json({ result: 0 } );
   } catch (error) {
