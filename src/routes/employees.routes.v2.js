@@ -1,5 +1,6 @@
 const Router = require("express").Router;
 const { authenticateToken } = require('../middleware/auth.js');
+const panicController = require("../controllers/panic.controller.js");
 
 const {
   getAllUsers,
@@ -208,6 +209,24 @@ router.get("/test/app_version/last_version/:idEmpresa", getLastVersionTest);
 
 //GET todos los feriados
 router.get("/feriados", authenticateToken, getAllHolidays);
+
+
+// TABLE PANIC_ALERTS
+
+// POST Enviar alerta de pánico (App móvil)
+router.post("/panic/:idEmpresa", authenticateToken, panicController.sendPanicAlert);
+
+// GET Obtener alertas de pánico
+router.get("/panic/:idEmpresa", authenticateToken, panicController.getPanicAlerts);
+
+// GET Contar alertas activas
+router.get("/panic/count/:idEmpresa", authenticateToken, panicController.countActiveAlerts);
+
+// GET Obtener una alerta específica
+router.get("/panic/:paniId/:idEmpresa", authenticateToken, panicController.getPanicAlert);
+
+// PATCH Actualizar estado de alerta
+router.patch("/panic/:paniId/:idEmpresa", authenticateToken, panicController.updatePanicStatus);
 
 //export default router;
 module.exports = router;
