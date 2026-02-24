@@ -41,8 +41,11 @@ const userRegister = async (req, res) => {
     // result = 1 Registracion correcta
     return res.json({ result : result.affectedRows });
   } catch (error) {
-    // result = 2 Usuario ya registrado
-    return res.status(500).json({ result: 2 });
+    if (error.code === 'ER_DUP_ENTRY') {
+      // Usuario ya registrado
+      return res.status(409).json({ result: 2, message: "Usuario ya registrado" });
+    }
+    return res.status(500).json({ result: 0, message: error.message });
   }
 };
 
