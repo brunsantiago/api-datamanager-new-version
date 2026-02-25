@@ -308,12 +308,20 @@ const registrarIngresoConChequeo = async (req, res) => {
       [last_cper]
     );
 
-    if (existing.length > 0 && existing[0].LAST_ESTA === 1) {
+    if (existing.length > 0 && existing[0].LAST_ESTA == 1) {
       const lastFech = existing[0].LAST_FECH;
       const lastHhor = existing[0].LAST_HHOR;
       const lastDhor = existing[0].LAST_DHOR;
 
-      let vencimiento = new Date(lastFech + ' ' + lastHhor);
+      // Formatear fecha: LAST_FECH puede venir como Date object de MySQL
+      let fechaStr;
+      if (lastFech instanceof Date) {
+        fechaStr = lastFech.toISOString().split('T')[0]; // YYYY-MM-DD
+      } else {
+        fechaStr = String(lastFech).split('T')[0];
+      }
+
+      let vencimiento = new Date(fechaStr + 'T' + lastHhor + ':00');
       if (lastDhor > lastHhor) {
         // Turno noche: sumar 1 día
         vencimiento.setDate(vencimiento.getDate() + 1);
@@ -324,7 +332,6 @@ const registrarIngresoConChequeo = async (req, res) => {
       if (ahora <= vencimiento) {
         // Sesión activa no vencida → devolver sesión existente sin duplicar
         await connection.rollback();
-        connection.release();
         return res.status(200).json({
           success: true,
           result: 1,
