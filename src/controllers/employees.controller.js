@@ -304,7 +304,7 @@ const registrarIngresoConChequeo = async (req, res) => {
 
     // --- CHECK DE SESIÓN ACTIVA ---
     const [existing] = await connection.query(
-      "SELECT LAST_ESTA, LAST_ASID, LAST_DHOR, LAST_HHOR, LAST_FECH FROM " + table_session + " WHERE LAST_CPER = ?",
+      "SELECT LAST_ESTA, LAST_ASID, LAST_DHOR, LAST_HHOR, LAST_FECH, LAST_DHRE, LAST_TIME FROM " + table_session + " WHERE LAST_CPER = ?",
       [last_cper]
     );
 
@@ -335,7 +335,10 @@ const registrarIngresoConChequeo = async (req, res) => {
         return res.status(200).json({
           success: true,
           result: 1,
-          asigId: existing[0].LAST_ASID
+          asigId: existing[0].LAST_ASID,
+          existingSession: true,
+          last_dhre: existing[0].LAST_DHRE,
+          last_time: existing[0].LAST_TIME
         });
       } else {
         // Puesto venció → cerrar sesión anterior y permitir nuevo ingreso
