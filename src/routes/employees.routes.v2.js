@@ -43,6 +43,7 @@ const {
   updateVersionDevice,
   getAllHolidays,
   registrarIngresoCompleto,
+  registrarIngresoConChequeo,
   registrarSalidaCompleta,
   getLastVersionTest
   } = require("../controllers/employees.controller.js");
@@ -99,6 +100,9 @@ router.post("/asigvigi", authenticateToken, addPuestoVigilador);
 
 //POST Registra el Ingreso tanto en la tabla ASIGVIGI como en LAST SESION (A partir de la version 1.3.8 - Ojo version Brouclean)
 router.post("/registro_completo/:idEmpresa", authenticateToken, registrarIngresoCompleto);
+
+//POST Registra el Ingreso con chequeo de sesión activa (A partir de la version 1.6)
+router.post("/registrar_ingreso_con_chequeo/:idEmpresa", authenticateToken, registrarIngresoConChequeo);
 
 //POST Registra la salida tanto en la tabla ASIGVIGI como en LAST SESION (A partir de la version 1.3.8 - Ojo version Brouclean)
 router.patch("/registro_salida/:asigId/:idEmpresa", authenticateToken, registrarSalidaCompleta);
