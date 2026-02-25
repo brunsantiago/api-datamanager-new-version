@@ -332,13 +332,20 @@ const registrarIngresoConChequeo = async (req, res) => {
       if (ahora <= vencimiento) {
         // Sesión activa no vencida → devolver sesión existente sin duplicar
         await connection.rollback();
+
+        // Formatear LAST_TIME: datetime de MySQL llega como Date object
+        const lastTimeDate = existing[0].LAST_TIME;
+        const lastTimeStr = lastTimeDate instanceof Date
+          ? lastTimeDate.toISOString().replace('T', ' ').split('.')[0]
+          : String(lastTimeDate);
+
         return res.status(200).json({
           success: true,
           result: 1,
           asigId: existing[0].LAST_ASID,
           existingSession: true,
           last_dhre: existing[0].LAST_DHRE,
-          last_time: existing[0].LAST_TIME
+          last_time: lastTimeStr
         });
       } else {
         // Puesto venció → cerrar sesión anterior y permitir nuevo ingreso
