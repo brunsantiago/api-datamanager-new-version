@@ -6,6 +6,7 @@ const {
   getAllUsers,
   getUserProfile,
   userRegister,
+  checkUserExists,
   userLogin,
   userRecoveryKey,
   deleteUser,
@@ -56,6 +57,9 @@ router.get("/users/:idEmpresa", authenticateToken, getAllUsers);
 
 // GET Obtener perfil de usuario
 router.get("/users/:persCodi/:idEmpresa", authenticateToken, getUserProfile);
+
+//GET Verificar si usuario ya está registrado
+router.get("/register/check/:userLega/:idEmpresa", checkUserExists); // No necesita token (pre-check de registro)
 
 //POST Registro de usuario
 router.post("/register/:idEmpresa", userRegister); // No necesita token porque es el primer usuario que se crea en la empresa

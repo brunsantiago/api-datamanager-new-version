@@ -49,6 +49,20 @@ const userRegister = async (req, res) => {
   }
 };
 
+const checkUserExists = async (req, res) => {
+  try {
+    const { userLega, idEmpresa } = req.params;
+    let table_name = selectTableUsers(idEmpresa);
+    const [result] = await pool.query(
+      "SELECT COUNT(*) AS count FROM " + table_name + " WHERE USER_LEGA = ?",
+      [userLega]
+    );
+    return res.json({ exists: result[0].count > 0 });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const userLogin = async (req, res) => {
   try {
     const { idEmpresa } = req.params;
@@ -777,6 +791,7 @@ module.exports = {
   getAllUsers,
   getUserProfile,
   userRegister,
+  checkUserExists,
   userLogin,
   userRecoveryKey,
   deleteUser,
