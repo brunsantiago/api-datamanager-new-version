@@ -220,7 +220,7 @@ const addPuestoVigilador = async (req, res) => {
 };
 
 // TABLE ASIGVIGI + LAST_SESSION
-
+// @deprecated v1.5 - Usar registrarIngresoConChequeo a partir de v1.6
 const registrarIngresoCompleto = async (req, res) => {
   const connection = await pool.getConnection();
   
