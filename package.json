@@ -18,7 +18,8 @@
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "nodemailer": "^8.0.5"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
